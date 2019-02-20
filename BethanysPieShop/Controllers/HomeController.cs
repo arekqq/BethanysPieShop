@@ -22,6 +22,8 @@ namespace BethanysPieShop.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
+
+
             var pies = _pieRepository.GetAllPies().OrderBy(p => p.Name);
 
             var homeViewModel = new HomeViewModel()
@@ -30,7 +32,16 @@ namespace BethanysPieShop.Controllers
                 Pies = pies.ToList()
             };
 
-            return View(homeViewModel);
+            return View(homeViewModel );
+        }
+
+        public IActionResult Details(int id)
+        {
+            var pie = _pieRepository.GetPieByID(id);
+            if (pie == null)
+                return NotFound();
+
+            return View(pie);
         }
     }
 }
